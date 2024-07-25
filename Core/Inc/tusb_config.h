@@ -30,6 +30,29 @@
  extern "C" {
 #endif
 
+//--------------------------------------------------------------------
+// User's Defined Configuration
+//--------------------------------------------------------------------
+
+// @note
+// The default configuration is set to High-speed mode. If the user wants to switch to Full-speed mode,
+// they need to reconfigure CubeMX to generate USB_OTG_FS instead of USB_OTG_HS. This change should
+// be done in the CubeMX configuration settings and then regenerate the project files to reflect the new USB mode.
+
+#ifndef USE_USB_FULL_SPEED
+  #define CFG_TUSB_MCU                 OPT_MCU_STM32F7
+  #define CFG_TUSB_OS                  OPT_OS_NONE
+  #define BOARD_TUD_MAX_SPEED          OPT_MODE_HIGH_SPEED
+  #define BOARD_TUD_RHPORT             1U
+  #define CFG_TUSB_RHPORT1_MODE        (OPT_MODE_DEVICE | OPT_MODE_HIGH_SPEED)
+#elif
+  #define CFG_TUSB_MCU                 OPT_MCU_STM32F7
+  #define CFG_TUSB_OS                  OPT_OS_NONE
+  #define BOARD_TUD_MAX_SPEED          OPT_MODE_FULL_SPEED
+  #define BOARD_TUD_RHPORT             0U
+  #define CFG_TUSB_RHPORT1_MODE        (OPT_MODE_DEVICE | OPT_MODE_FULL_SPEED)
+#endif
+
 //--------------------------------------------------------------------+
 // Board Specific Configuration
 //--------------------------------------------------------------------+
